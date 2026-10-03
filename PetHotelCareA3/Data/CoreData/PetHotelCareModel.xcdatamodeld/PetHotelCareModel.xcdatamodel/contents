@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24837" systemVersion="25E253" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CareActivityRecordEntity" representedClassName=".CareActivityRecordEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="careTaskID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="completedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="petStayID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="taskType" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="CareTaskEntity" representedClassName=".CareTaskEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="instructions" optional="YES" attributeType="String"/>
+        <attribute name="isCompleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="petStayID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="scheduledTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="MedicationScheduleEntity" representedClassName=".MedicationScheduleEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="dosage" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="medicationName" optional="YES" attributeType="String"/>
+        <attribute name="minimumIntervalHours" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="petStayID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="scheduledTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="PetEntity" representedClassName=".PetEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="breed" optional="YES" attributeType="String"/>
+        <attribute name="dateOfBirth" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="species" optional="YES" attributeType="String"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PetOwnerEntity" inverseName="pets" inverseEntity="PetOwnerEntity"/>
+        <relationship name="stays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PetStayEntity" inverseName="pet" inverseEntity="PetStayEntity"/>
+    </entity>
+    <entity name="PetOwnerEntity" representedClassName=".PetOwnerEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String"/>
+        <relationship name="pets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PetEntity" inverseName="owner" inverseEntity="PetEntity"/>
+    </entity>
+    <entity name="PetStayEntity" representedClassName=".PetStayEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="careNotes" optional="YES" attributeType="String"/>
+        <attribute name="checkInDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="checkOutDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="feedingInstructions" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="roomNumber" optional="YES" attributeType="String"/>
+        <relationship name="pet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PetEntity" inverseName="stays" inverseEntity="PetEntity"/>
+    </entity>
+    <entity name="StaffMemberEntity" representedClassName=".StaffMemberEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+</model>

@@ -29,9 +29,22 @@
 		C62ACC8B306F8D47002E4E2C /* PetHotelCareA3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PetHotelCareA3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C62ACCCF3070E704002E4E2C /* Exceptions for "PetHotelCareA3" folder in "PetHotelCareA3" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Data/CoreData/PetHotelCareModel.xcdatamodeld,
+			);
+			target = C62ACC73306F8D46002E4E2C /* PetHotelCareA3 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C62ACC76306F8D46002E4E2C /* PetHotelCareA3 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C62ACCCF3070E704002E4E2C /* Exceptions for "PetHotelCareA3" folder in "PetHotelCareA3" target */,
+			);
 			path = PetHotelCareA3;
 			sourceTree = "<group>";
 		};
