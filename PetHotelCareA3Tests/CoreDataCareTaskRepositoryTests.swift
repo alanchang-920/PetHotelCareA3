@@ -5,73 +5,63 @@
 //  Created by Chang Chia ming on 2026/10/3.
 //
 
-import XCTest
+import Testing
 import CoreData
 @testable import PetHotelCareA3
 
-final class CoreDataCareTaskRepositoryTests: XCTestCase {
+@MainActor
+struct CoreDataCareTaskRepositoryTests {
 
-    private var persistenceController: PersistenceController!
-    private var repository: CoreDataCareTaskRepository!
+    private func makeRepository() -> CoreDataCareTaskRepository {
+        let persistenceController = PersistenceController(inMemory: true)
 
-    override func setUpWithError() throws {
-        persistenceController = PersistenceController(inMemory: true)
-
-        repository = CoreDataCareTaskRepository(
+        return CoreDataCareTaskRepository(
             context: persistenceController.container.viewContext
         )
     }
 
-    override func tearDownWithError() throws {
-        repository = nil
-        persistenceController = nil
+    private func makeCareTask() -> CareTask {
+        CareTask(
+            petStayID: UUID(),
+            type: .feeding,
+            scheduledTime: Date(),
+            instructions: "Feed according to instructions",
+            isCompleted: false
+        )
     }
-    
-    func testSaveAndFetchCareTask() throws {
-            let task = CareTask(
-                petStayID: UUID(),
-                type: .feeding,
-                scheduledTime: Date(),
-                instructions: "Feed 1 cup of dry food",
-                isCompleted: false
-            )
 
-            try repository.saveCareTask(task)
+    @Test
+    func saveAndFetchCareTask() throws {
+        
+        let repository = makeRepository()
+        let task = makeCareTask()
 
-            let tasks = try repository.fetchCareTasks()
+        try repository.saveCareTask(task)
 
-            XCTAssertEqual(tasks.count, 1)
+        let tasks = try repository.fetchCareTasks()
 
-            let fetchedTask = try XCTUnwrap(tasks.first)
+        #expect(tasks.count == 1)
+        #expect(tasks.first?.id == task.id)
+        #expect(tasks.first?.petStayID == task.petStayID)
+        #expect(tasks.first?.type == .feeding)
+        #expect(tasks.first?.instructions == "Feed according to instructions")
+        #expect(tasks.first?.isCompleted == false)
+    }
 
-            XCTAssertEqual(fetchedTask.id, task.id)
-            XCTAssertEqual(fetchedTask.petStayID, task.petStayID)
-            XCTAssertEqual(fetchedTask.type, .feeding)
-            XCTAssertEqual(fetchedTask.scheduledTime, task.scheduledTime)
-            XCTAssertEqual(
-                fetchedTask.instructions,
-                "Feed 1 cup of dry food"
-            )
-            XCTAssertFalse(fetchedTask.isCompleted)
-        }
-    
-    func testDeleteCareTask() throws {
-            let task = CareTask(
-                petStayID: UUID(),
-                type: .walk,
-                scheduledTime: Date(),
-                instructions: "Walk for 30 minutes",
-                isCompleted: false
-            )
+    @Test
+    func deleteCareTask() throws {
+        
+        let repository = makeRepository()
+        let task = makeCareTask()
 
-            try repository.saveCareTask(task)
+        try repository.saveCareTask(task)
 
-            var tasks = try repository.fetchCareTasks()
-            XCTAssertEqual(tasks.count, 1)
+        var tasks = try repository.fetchCareTasks()
+        #expect(tasks.count == 1)
 
-            try repository.deleteCareTask(id: task.id)
+        try repository.deleteCareTask(id: task.id)
 
-            tasks = try repository.fetchCareTasks()
-            XCTAssertEqual(tasks.count, 0)
-        }
+        tasks = try repository.fetchCareTasks()
+        #expect(tasks.isEmpty)
+    }
 }

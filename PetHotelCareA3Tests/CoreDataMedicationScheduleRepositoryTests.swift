@@ -5,72 +5,63 @@
 //  Created by Chang Chia ming on 2026/10/3.
 //
 
-import XCTest
+import Testing
 import CoreData
 @testable import PetHotelCareA3
 
-final class CoreDataMedicationScheduleRepositoryTests: XCTestCase {
+@MainActor
+struct CoreDataMedicationScheduleRepositoryTests {
 
-    private var persistenceController: PersistenceController!
-    private var repository: CoreDataMedicationScheduleRepository!
+    private func makeRepository() -> CoreDataMedicationScheduleRepository {
+        let persistenceController = PersistenceController(inMemory: true)
 
-    override func setUpWithError() throws {
-        persistenceController = PersistenceController(inMemory: true)
-
-        repository = CoreDataMedicationScheduleRepository(
+        return CoreDataMedicationScheduleRepository(
             context: persistenceController.container.viewContext
         )
     }
 
-    override func tearDownWithError() throws {
-        repository = nil
-        persistenceController = nil
-    }
-    
-    func testSaveAndFetchMedicationSchedule() throws {
-        let petStayID = UUID()
-
-        let schedule = MedicationSchedule(
-            petStayID: petStayID,
-            medicationName: "Carprofen",
-            dosage: "25 mg",
-            scheduledTime: Date(),
-            minimumIntervalHours: 12
-        )
-
-        try repository.saveMedicationSchedule(schedule)
-
-        let schedules = try repository.fetchMedicationSchedules()
-
-        XCTAssertEqual(schedules.count, 1)
-        XCTAssertEqual(schedules.first?.id, schedule.id)
-        XCTAssertEqual(schedules.first?.petStayID, petStayID)
-        XCTAssertEqual(schedules.first?.medicationName, "Carprofen")
-        XCTAssertEqual(schedules.first?.dosage, "25 mg")
-        XCTAssertEqual(schedules.first?.minimumIntervalHours, 12)
-    }
-    
-    func testDeleteMedicationSchedule() throws {
-        let schedule = MedicationSchedule(
+    private func makeMedicationSchedule() -> MedicationSchedule {
+        MedicationSchedule(
             petStayID: UUID(),
             medicationName: "Carprofen",
             dosage: "25 mg",
             scheduledTime: Date(),
             minimumIntervalHours: 12
         )
+    }
 
-        // Save the schedule first
+    @Test
+    func saveAndFetchMedicationSchedule() throws {
+   
+        let repository = makeRepository()
+        let schedule = makeMedicationSchedule()
+
         try repository.saveMedicationSchedule(schedule)
 
-        // Make sure the schedule was saved
-        var schedules = try repository.fetchMedicationSchedules()
-        XCTAssertEqual(schedules.count, 1)
+        let schedules = try repository.fetchMedicationSchedules()
 
-        // Delete the schedule
+        #expect(schedules.count == 1)
+        #expect(schedules.first?.id == schedule.id)
+        #expect(schedules.first?.petStayID == schedule.petStayID)
+        #expect(schedules.first?.medicationName == "Carprofen")
+        #expect(schedules.first?.dosage == "25 mg")
+        #expect(schedules.first?.minimumIntervalHours == 12)
+    }
+
+    @Test
+    func deleteMedicationSchedule() throws {
+       
+        let repository = makeRepository()
+        let schedule = makeMedicationSchedule()
+
+        try repository.saveMedicationSchedule(schedule)
+
+        var schedules = try repository.fetchMedicationSchedules()
+        #expect(schedules.count == 1)
+
         try repository.deleteMedicationSchedule(id: schedule.id)
 
-        // Fetch again and make sure it is gone
         schedules = try repository.fetchMedicationSchedules()
-        XCTAssertEqual(schedules.count, 0)
+        #expect(schedules.isEmpty)
     }
 }

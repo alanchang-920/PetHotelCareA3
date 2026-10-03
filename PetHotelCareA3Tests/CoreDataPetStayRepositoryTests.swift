@@ -5,43 +5,36 @@
 //  Created by Chang Chia ming on 2026/10/3.
 //
 
-import XCTest
+import Testing
 import CoreData
 @testable import PetHotelCareA3
 
-final class CoreDataPetStayRepositoryTests: XCTestCase {
+@MainActor
+struct CoreDataPetStayRepositoryTests {
 
-    private var persistenceController: PersistenceController!
-    private var repository: CoreDataPetStayRepository!
+    private func makeRepository() -> CoreDataPetStayRepository {
+        let persistenceController = PersistenceController(inMemory: true)
 
-    override func setUpWithError() throws {
-        persistenceController = PersistenceController(inMemory: true)
-
-        repository = CoreDataPetStayRepository(
+        return CoreDataPetStayRepository(
             context: persistenceController.container.viewContext
         )
     }
 
-    override func tearDownWithError() throws {
-        repository = nil
-        persistenceController = nil
-    }
-
-    func testSaveAndFetchPetStay() throws {
+    private func makePetStay() -> PetStay {
         let owner = PetOwner(
-            name: "John Smith",
-            phoneNumber: "0400123456"
+            name: "Alan",
+            phoneNumber: "0400000000"
         )
 
         let pet = Pet(
             name: "Milo",
             species: .dog,
-            breed: "Golden Retriever",
+            breed: "Labrador",
             dateOfBirth: Date(),
             owner: owner
         )
 
-        let petStay = PetStay(
+        return PetStay(
             pet: pet,
             roomNumber: "A101",
             checkInDate: Date(),
@@ -49,58 +42,45 @@ final class CoreDataPetStayRepositoryTests: XCTestCase {
             feedingInstructions: "Feed twice daily",
             careNotes: "Friendly dog"
         )
-
-        try repository.savePetStay(petStay)
-
-        let stays = try repository.fetchPetStays()
-
-        XCTAssertEqual(stays.count, 1)
-        XCTAssertEqual(stays.first?.id, petStay.id)
-        XCTAssertEqual(stays.first?.roomNumber, "A101")
-        XCTAssertEqual(stays.first?.feedingInstructions, "Feed twice daily")
-        XCTAssertEqual(stays.first?.careNotes, "Friendly dog")
-
-        XCTAssertEqual(stays.first?.pet.id, pet.id)
-        XCTAssertEqual(stays.first?.pet.name, "Milo")
-        XCTAssertEqual(stays.first?.pet.species, .dog)
-        XCTAssertEqual(stays.first?.pet.breed, "Golden Retriever")
-
-        XCTAssertEqual(stays.first?.pet.owner.id, owner.id)
-        XCTAssertEqual(stays.first?.pet.owner.name, "John Smith")
-        XCTAssertEqual(stays.first?.pet.owner.phoneNumber, "0400123456")
     }
 
-    func testDeletePetStay() throws {
-        let owner = PetOwner(
-            name: "John Smith",
-            phoneNumber: "0400123456"
-        )
-
-        let pet = Pet(
-            name: "Milo",
-            species: .dog,
-            breed: "Golden Retriever",
-            dateOfBirth: Date(),
-            owner: owner
-        )
-
-        let petStay = PetStay(
-            pet: pet,
-            roomNumber: "A101",
-            checkInDate: Date(),
-            checkOutDate: Date().addingTimeInterval(86400),
-            feedingInstructions: "Feed twice daily",
-            careNotes: "Friendly dog"
-        )
+    @Test
+    func saveAndFetchPetStay() throws {
+        
+        let repository = makeRepository()
+        let petStay = makePetStay()
 
         try repository.savePetStay(petStay)
 
-        var stays = try repository.fetchPetStays()
-        XCTAssertEqual(stays.count, 1)
+        let petStays = try repository.fetchPetStays()
+
+        #expect(petStays.count == 1)
+        #expect(petStays.first?.id == petStay.id)
+        #expect(petStays.first?.roomNumber == "A101")
+        #expect(petStays.first?.feedingInstructions == "Feed twice daily")
+        #expect(petStays.first?.careNotes == "Friendly dog")
+
+        #expect(petStays.first?.pet.id == petStay.pet.id)
+        #expect(petStays.first?.pet.name == "Milo")
+        #expect(petStays.first?.pet.species == .dog)
+
+        #expect(petStays.first?.pet.owner.id == petStay.pet.owner.id)
+        #expect(petStays.first?.pet.owner.name == "Alan")
+    }
+
+    @Test
+    func deletePetStay() throws {
+        let repository = makeRepository()
+        let petStay = makePetStay()
+
+        try repository.savePetStay(petStay)
+
+        var petStays = try repository.fetchPetStays()
+        #expect(petStays.count == 1)
 
         try repository.deletePetStay(id: petStay.id)
 
-        stays = try repository.fetchPetStays()
-        XCTAssertEqual(stays.count, 0)
+        petStays = try repository.fetchPetStays()
+        #expect(petStays.isEmpty)
     }
 }

@@ -5,38 +5,35 @@
 //  Created by Chang Chia ming on 2026/10/3.
 //
 
-import XCTest
+import Testing
 import CoreData
 @testable import PetHotelCareA3
 
-final class CoreDataPetRepositoryTests: XCTestCase {
+@MainActor
+struct CoreDataPetRepositoryTests {
 
-    private var persistenceController: PersistenceController!
-    private var repository: CoreDataPetRepository!
+    private func makeRepository() -> CoreDataPetRepository {
+        let persistenceController = PersistenceController(inMemory: true)
 
-    override func setUpWithError() throws {
-        persistenceController = PersistenceController(inMemory: true)
-
-        repository = CoreDataPetRepository(
+        return CoreDataPetRepository(
             context: persistenceController.container.viewContext
         )
     }
 
-    override func tearDownWithError() throws {
-        repository = nil
-        persistenceController = nil
-    }
-    
-    func testSaveAndFetchPet() throws {
+    @Test
+    func saveAndFetchPet() throws {
+
+        let repository = makeRepository()
+
         let owner = PetOwner(
-            name: "John Smith",
-            phoneNumber: "0400123456"
+            name: "Alan",
+            phoneNumber: "0400000000"
         )
 
         let pet = Pet(
             name: "Milo",
             species: .dog,
-            breed: "Golden Retriever",
+            breed: "Labrador",
             dateOfBirth: Date(),
             owner: owner
         )
@@ -45,25 +42,30 @@ final class CoreDataPetRepositoryTests: XCTestCase {
 
         let pets = try repository.fetchPets()
 
-        XCTAssertEqual(pets.count, 1)
-        XCTAssertEqual(pets.first?.id, pet.id)
-        XCTAssertEqual(pets.first?.name, "Milo")
-        XCTAssertEqual(pets.first?.species, .dog)
-        XCTAssertEqual(pets.first?.breed, "Golden Retriever")
-        XCTAssertEqual(pets.first?.owner.name, "John Smith")
-        XCTAssertEqual(pets.first?.owner.phoneNumber, "0400123456")
+        #expect(pets.count == 1)
+        #expect(pets.first?.id == pet.id)
+        #expect(pets.first?.name == "Milo")
+        #expect(pets.first?.species == .dog)
+        #expect(pets.first?.breed == "Labrador")
+        #expect(pets.first?.owner.id == owner.id)
+        #expect(pets.first?.owner.name == "Alan")
+        #expect(pets.first?.owner.phoneNumber == "0400000000")
     }
-    
-    func testDeletePet() throws {
+
+    @Test
+    func deletePet() throws {
+ 
+        let repository = makeRepository()
+
         let owner = PetOwner(
-            name: "John Smith",
-            phoneNumber: "0400123456"
+            name: "Alan",
+            phoneNumber: "0400000000"
         )
 
         let pet = Pet(
             name: "Milo",
             species: .dog,
-            breed: "Golden Retriever",
+            breed: "Labrador",
             dateOfBirth: Date(),
             owner: owner
         )
@@ -71,11 +73,11 @@ final class CoreDataPetRepositoryTests: XCTestCase {
         try repository.savePet(pet)
 
         var pets = try repository.fetchPets()
-        XCTAssertEqual(pets.count, 1)
+        #expect(pets.count == 1)
 
         try repository.deletePet(id: pet.id)
 
         pets = try repository.fetchPets()
-        XCTAssertEqual(pets.count, 0)
+        #expect(pets.isEmpty)
     }
 }
