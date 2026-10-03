@@ -7,6 +7,7 @@
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="petStayID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="taskType" optional="YES" attributeType="String"/>
+        <relationship name="completedBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StaffMemberEntity" inverseName="activityRecords" inverseEntity="StaffMemberEntity"/>
     </entity>
     <entity name="CareTaskEntity" representedClassName=".CareTaskEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -51,5 +52,6 @@
     <entity name="StaffMemberEntity" representedClassName=".StaffMemberEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="activityRecords" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CareActivityRecordEntity" inverseName="completedBy" inverseEntity="CareActivityRecordEntity"/>
     </entity>
 </model>

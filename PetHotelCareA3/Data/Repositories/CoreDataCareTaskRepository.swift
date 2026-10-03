@@ -7,7 +7,6 @@
 
 import CoreData
 
-/// Core Data implementation for managing care task data.
 final class CoreDataCareTaskRepository: CareTaskRepository {
 
     private let context: NSManagedObjectContext

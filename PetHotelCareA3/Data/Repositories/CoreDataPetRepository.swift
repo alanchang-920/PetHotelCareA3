@@ -7,7 +7,6 @@
 
 import CoreData
 
-/// Core Data implementation for managing pet data.
 final class CoreDataPetRepository: PetRepository {
 
     private let context: NSManagedObjectContext
