@@ -20,6 +20,16 @@ private final class MockCareTaskRepository: CareTaskRepository {
     func saveCareTask(_ careTask: CareTask) throws {
         tasks.append(careTask)
     }
+    
+    func updateCareTask(_ careTask: CareTask) throws {
+        guard let index = tasks.firstIndex(where: {
+            $0.id == careTask.id
+        }) else {
+            return
+        }
+
+        tasks[index] = careTask
+    }
 
     func deleteCareTask(id: UUID) throws {
         tasks.removeAll { $0.id == id }

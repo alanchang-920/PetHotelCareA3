@@ -56,6 +56,27 @@ final class CoreDataCareTaskRepository: CareTaskRepository {
 
         try context.save()
     }
+    
+    func updateCareTask(_ careTask: CareTask) throws {
+        let request = CareTaskEntity.fetchRequest()
+
+        request.predicate = NSPredicate(
+            format: "id == %@",
+            careTask.id as CVarArg
+        )
+
+        guard let entity = try context.fetch(request).first else {
+            return
+        }
+
+        entity.petStayID = careTask.petStayID
+        entity.type = careTask.type.rawValue
+        entity.scheduledTime = careTask.scheduledTime
+        entity.instructions = careTask.instructions
+        entity.isCompleted = careTask.isCompleted
+
+        try context.save()
+    }
 
     func deleteCareTask(id: UUID) throws {
         let request = CareTaskEntity.fetchRequest()

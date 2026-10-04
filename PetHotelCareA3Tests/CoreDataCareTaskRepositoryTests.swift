@@ -47,6 +47,33 @@ struct CoreDataCareTaskRepositoryTests {
         #expect(tasks.first?.instructions == "Feed according to instructions")
         #expect(tasks.first?.isCompleted == false)
     }
+    
+    @Test
+    func updateCareTask() throws {
+        let repository = makeRepository()
+        let petStayID = UUID()
+
+        let task = CareTask(
+            petStayID: petStayID,
+            type: .feeding,
+            scheduledTime: Date(),
+            instructions: "Feed breakfast",
+            isCompleted: false
+        )
+
+        try repository.saveCareTask(task)
+
+        var updatedTask = task
+        updatedTask.isCompleted = true
+
+        try repository.updateCareTask(updatedTask)
+
+        let fetchedTasks = try repository.fetchCareTasks()
+
+        #expect(fetchedTasks.count == 1)
+        #expect(fetchedTasks.first?.id == task.id)
+        #expect(fetchedTasks.first?.isCompleted == true)
+    }
 
     @Test
     func deleteCareTask() throws {
