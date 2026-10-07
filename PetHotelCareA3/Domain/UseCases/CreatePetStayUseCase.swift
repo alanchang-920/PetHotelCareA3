@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class CreatePetStayUseCase {
+struct CreatePetStayUseCase {
 
     private let petStayRepository: PetStayRepository
 

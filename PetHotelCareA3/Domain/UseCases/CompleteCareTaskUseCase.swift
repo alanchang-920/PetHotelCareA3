@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class CompleteCareTaskUseCase {
+struct CompleteCareTaskUseCase {
 
     private let careTaskRepository: CareTaskRepository
     private let careActivityRecordRepository: CareActivityRecordRepository
@@ -26,22 +26,25 @@ final class CompleteCareTaskUseCase {
         notes: String,
         completedAt: Date = Date()
     ) throws {
-
-        let tasks = try careTaskRepository.fetchCareTasks()
+        let tasks =
+            try careTaskRepository.fetchCareTasks()
 
         guard var task = tasks.first(where: {
             $0.id == careTaskID
         }) else {
-            return
+            throw CompleteCareTaskError
+                .careTaskNotFound
         }
 
         guard task.isCompleted == false else {
-            return
+            throw CompleteCareTaskError
+                .careTaskAlreadyCompleted
         }
 
         task.isCompleted = true
 
-        try careTaskRepository.updateCareTask(task)
+        try careTaskRepository
+            .updateCareTask(task)
 
         let record = CareActivityRecord(
             petStayID: task.petStayID,
@@ -52,6 +55,7 @@ final class CompleteCareTaskUseCase {
             notes: notes
         )
 
-        try careActivityRecordRepository.saveCareActivityRecord(record)
+        try careActivityRecordRepository
+            .saveCareActivityRecord(record)
     }
 }

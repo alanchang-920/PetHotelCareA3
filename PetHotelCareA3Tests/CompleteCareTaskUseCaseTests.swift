@@ -9,7 +9,6 @@ import Foundation
 import Testing
 @testable import PetHotelCareA3
 
-
 private final class MockCompleteCareTaskRepository: CareTaskRepository {
 
     var tasks: [CareTask] = []
@@ -37,7 +36,6 @@ private final class MockCompleteCareTaskRepository: CareTaskRepository {
     }
 }
 
-
 private final class MockCareActivityRecordRepository:
     CareActivityRecordRepository {
 
@@ -58,12 +56,10 @@ private final class MockCareActivityRecordRepository:
     }
 }
 
-
 struct CompleteCareTaskUseCaseTests {
 
     @Test
     func completesIncompleteCareTask() throws {
-
         let petStayID = UUID()
 
         let task = CareTask(
@@ -74,7 +70,9 @@ struct CompleteCareTaskUseCaseTests {
             isCompleted: false
         )
 
-        let taskRepository = MockCompleteCareTaskRepository()
+        let taskRepository =
+            MockCompleteCareTaskRepository()
+
         taskRepository.tasks = [task]
 
         let activityRepository =
@@ -96,13 +94,14 @@ struct CompleteCareTaskUseCaseTests {
         )
 
         #expect(taskRepository.tasks.count == 1)
-        #expect(taskRepository.tasks.first?.isCompleted == true)
-    }
 
+        #expect(
+            taskRepository.tasks.first?.isCompleted == true
+        )
+    }
 
     @Test
     func createsActivityRecordWhenTaskCompleted() throws {
-
         let petStayID = UUID()
 
         let task = CareTask(
@@ -113,7 +112,9 @@ struct CompleteCareTaskUseCaseTests {
             isCompleted: false
         )
 
-        let taskRepository = MockCompleteCareTaskRepository()
+        let taskRepository =
+            MockCompleteCareTaskRepository()
+
         taskRepository.tasks = [task]
 
         let activityRepository =
@@ -137,9 +138,12 @@ struct CompleteCareTaskUseCaseTests {
             completedAt: completionDate
         )
 
-        #expect(activityRepository.records.count == 1)
+        #expect(
+            activityRepository.records.count == 1
+        )
 
-        let record = activityRepository.records.first
+        let record =
+            activityRepository.records.first
 
         #expect(record?.careTaskID == task.id)
         #expect(record?.petStayID == petStayID)
@@ -150,10 +154,8 @@ struct CompleteCareTaskUseCaseTests {
         #expect(record?.notes == "Ate all food")
     }
 
-
     @Test
-    func doesNotCreateDuplicateRecordForCompletedTask() throws {
-
+    func rejectsAlreadyCompletedCareTask() throws {
         let task = CareTask(
             petStayID: UUID(),
             type: .walk,
@@ -162,7 +164,9 @@ struct CompleteCareTaskUseCaseTests {
             isCompleted: true
         )
 
-        let taskRepository = MockCompleteCareTaskRepository()
+        let taskRepository =
+            MockCompleteCareTaskRepository()
+
         taskRepository.tasks = [task]
 
         let activityRepository =
@@ -177,22 +181,23 @@ struct CompleteCareTaskUseCaseTests {
             name: "Test Staff"
         )
 
-        try useCase.execute(
-            careTaskID: task.id,
-            completedBy: staff,
-            notes: "Completed"
+        #expect(throws: CompleteCareTaskError.careTaskAlreadyCompleted) {
+            try useCase.execute(
+                careTaskID: task.id,
+                completedBy: staff,
+                notes: "Completed"
+            )
+        }
+
+        #expect(
+            activityRepository.records.isEmpty
         )
-
-        #expect(taskRepository.tasks.count == 1)
-        #expect(taskRepository.tasks.first?.isCompleted == true)
-
-        #expect(activityRepository.records.isEmpty)
     }
-    
-    @Test
-    func doesNothingWhenCareTaskDoesNotExist() throws {
 
-        let taskRepository = MockCompleteCareTaskRepository()
+    @Test
+    func rejectsCareTaskWhenTaskDoesNotExist() throws {
+        let taskRepository =
+            MockCompleteCareTaskRepository()
 
         let activityRepository =
             MockCareActivityRecordRepository()
@@ -206,13 +211,16 @@ struct CompleteCareTaskUseCaseTests {
             name: "Test Staff"
         )
 
-        try useCase.execute(
-            careTaskID: UUID(),
-            completedBy: staff,
-            notes: "Completed"
-        )
+        #expect(throws: CompleteCareTaskError.careTaskNotFound) {
+            try useCase.execute(
+                careTaskID: UUID(),
+                completedBy: staff,
+                notes: "Completed"
+            )
+        }
 
-        #expect(taskRepository.tasks.isEmpty)
-        #expect(activityRepository.records.isEmpty)
+        #expect(
+            activityRepository.records.isEmpty
+        )
     }
 }

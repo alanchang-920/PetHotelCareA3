@@ -201,4 +201,47 @@ struct ManageMedicationSchedulesUseCaseTests {
             } == false
         )
     }
+    
+    @Test
+    func rejectsInvalidMinimumInterval() throws {
+        let repository =
+            MockManageMedicationScheduleRepository()
+
+        let useCase =
+            ManageMedicationSchedulesUseCase(
+                medicationScheduleRepository: repository
+            )
+
+        let petStayID = UUID()
+
+        #expect(
+            throws:
+                ManageMedicationSchedulesError
+                    .invalidMinimumInterval
+        ) {
+            try useCase.createSchedule(
+                petStayID: petStayID,
+                medicationName: "Carprofen",
+                dosage: "25 mg",
+                scheduledTime: Date(),
+                minimumIntervalHours: 0
+            )
+        }
+
+        #expect(
+            throws:
+                ManageMedicationSchedulesError
+                    .invalidMinimumInterval
+        ) {
+            try useCase.createSchedule(
+                petStayID: petStayID,
+                medicationName: "Carprofen",
+                dosage: "25 mg",
+                scheduledTime: Date(),
+                minimumIntervalHours: -1
+            )
+        }
+
+        #expect(repository.schedules.isEmpty)
+    }
 }

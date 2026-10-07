@@ -7,24 +7,35 @@
 
 import Foundation
 
-final class ManageMedicationSchedulesUseCase {
+struct ManageMedicationSchedulesUseCase {
 
-    private let medicationScheduleRepository: MedicationScheduleRepository
+    private let medicationScheduleRepository:
+        MedicationScheduleRepository
 
     init(
-        medicationScheduleRepository: MedicationScheduleRepository
+        medicationScheduleRepository:
+            MedicationScheduleRepository
     ) {
-        self.medicationScheduleRepository = medicationScheduleRepository
+        self.medicationScheduleRepository =
+            medicationScheduleRepository
     }
 
-    func getSchedules(for petStayID: UUID) throws -> [MedicationSchedule] {
+    func getSchedules(
+        for petStayID: UUID
+    ) throws -> [MedicationSchedule] {
 
-        let schedules = try medicationScheduleRepository
-            .fetchMedicationSchedules()
+        let schedules =
+            try medicationScheduleRepository
+                .fetchMedicationSchedules()
 
         return schedules
-            .filter { $0.petStayID == petStayID }
-            .sorted { $0.scheduledTime < $1.scheduledTime }
+            .filter {
+                $0.petStayID == petStayID
+            }
+            .sorted {
+                $0.scheduledTime <
+                    $1.scheduledTime
+            }
     }
 
     @discardableResult
@@ -36,12 +47,18 @@ final class ManageMedicationSchedulesUseCase {
         minimumIntervalHours: Double
     ) throws -> MedicationSchedule {
 
+        guard minimumIntervalHours > 0 else {
+            throw ManageMedicationSchedulesError
+                .invalidMinimumInterval
+        }
+
         let schedule = MedicationSchedule(
             petStayID: petStayID,
             medicationName: medicationName,
             dosage: dosage,
             scheduledTime: scheduledTime,
-            minimumIntervalHours: minimumIntervalHours
+            minimumIntervalHours:
+                minimumIntervalHours
         )
 
         try medicationScheduleRepository
@@ -50,8 +67,12 @@ final class ManageMedicationSchedulesUseCase {
         return schedule
     }
 
-    func deleteSchedule(id: UUID) throws {
+    func deleteSchedule(
+        id: UUID
+    ) throws {
         try medicationScheduleRepository
-            .deleteMedicationSchedule(id: id)
+            .deleteMedicationSchedule(
+                id: id
+            )
     }
 }
