@@ -12,6 +12,7 @@ struct CareTasksView: View {
     @ObservedObject var viewModel: CareTasksViewModel
 
     let petStayID: UUID
+    let petName: String
 
     var body: some View {
         ScrollView {
@@ -35,7 +36,8 @@ struct CareTasksView: View {
                 NavigationLink {
                     AddCareTaskView(
                         viewModel: viewModel,
-                        petStayID: petStayID
+                        petStayID: petStayID,
+                        petName: petName
                     )
                 } label: {
                     Image(systemName: "plus")
@@ -446,7 +448,8 @@ private extension CareTasksView {
 
         CareTasksView(
             viewModel: viewModel,
-            petStayID: petStayID
+            petStayID: petStayID,
+            petName: "Hana"
         )
     }
 }

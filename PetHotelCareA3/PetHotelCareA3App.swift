@@ -33,6 +33,9 @@ struct PetHotelCareA3App: App {
                 \.managedObjectContext,
                 persistenceController.container.viewContext
             )
+            .onAppear {
+                           NotificationManager.shared.requestAuthorization()
+                       }
         }
     }
 }

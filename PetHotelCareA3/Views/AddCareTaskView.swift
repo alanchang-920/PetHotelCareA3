@@ -12,6 +12,7 @@ struct AddCareTaskView: View {
     @ObservedObject var viewModel: CareTasksViewModel
 
     let petStayID: UUID
+    let petName: String
 
     @Environment(\.dismiss) private var dismiss
 
@@ -104,6 +105,7 @@ private extension AddCareTaskView {
     func addTask() {
         viewModel.createTask(
             petStayID: petStayID,
+            petName: petName,
             type: selectedType,
             scheduledTime: scheduledTime,
             instructions: instructions

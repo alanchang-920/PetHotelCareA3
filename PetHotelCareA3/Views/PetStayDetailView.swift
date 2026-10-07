@@ -264,9 +264,9 @@ private extension PetStayDetailView {
 
             NavigationLink {
                 CareTasksView(
-                    viewModel:
-                        appContainer.makeCareTasksViewModel(),
-                    petStayID: stay.id
+                    viewModel: appContainer.makeCareTasksViewModel(),
+                    petStayID: stay.id,
+                    petName: stay.pet.name
                 )
             } label: {
                 actionRow(

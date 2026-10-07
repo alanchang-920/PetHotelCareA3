@@ -64,6 +64,7 @@ final class CareTasksViewModel: ObservableObject {
 
     func createTask(
         petStayID: UUID,
+        petName: String,
         type: CareTaskType,
         scheduledTime: Date,
         instructions: String
@@ -82,6 +83,23 @@ final class CareTasksViewModel: ObservableObject {
             loadTasks(
                 for: petStayID
             )
+
+            if let newTask = tasks
+                .filter({
+                    $0.petStayID == petStayID &&
+                    $0.type == type &&
+                    $0.scheduledTime == scheduledTime
+                })
+                .last {
+
+                NotificationManager.shared
+                    .scheduleCareTaskNotification(
+                        taskID: newTask.id,
+                        petName: petName,
+                        taskType: taskTypeName(type),
+                        scheduledTime: scheduledTime
+                    )
+            }
 
         } catch {
             errorMessage =
@@ -132,6 +150,19 @@ final class CareTasksViewModel: ObservableObject {
         } catch {
             errorMessage =
                 "Unable to delete this care task. Please try again."
+        }
+    }
+    
+    private func taskTypeName(
+        _ type: CareTaskType
+    ) -> String {
+        switch type {
+        case .feeding:
+            return "Feeding"
+        case .walk:
+            return "Walk"
+        case .medication:
+            return "Medication"
         }
     }
 }
