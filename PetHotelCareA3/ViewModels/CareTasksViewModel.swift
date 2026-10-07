@@ -15,18 +15,26 @@ final class CareTasksViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var errorMessage: String?
 
-    private let manageCareTasksUseCase: ManageCareTasksUseCase
-    private let completeCareTaskUseCase: CompleteCareTaskUseCase
+    private let manageCareTasksUseCase:
+        ManageCareTasksUseCase
+
+    private let completeCareTaskUseCase:
+        CompleteCareTaskUseCase
 
     init(
         manageCareTasksUseCase: ManageCareTasksUseCase,
         completeCareTaskUseCase: CompleteCareTaskUseCase
     ) {
-        self.manageCareTasksUseCase = manageCareTasksUseCase
-        self.completeCareTaskUseCase = completeCareTaskUseCase
+        self.manageCareTasksUseCase =
+            manageCareTasksUseCase
+
+        self.completeCareTaskUseCase =
+            completeCareTaskUseCase
     }
 
-    func loadTasks(for petStayID: UUID) {
+    func loadTasks(
+        for petStayID: UUID
+    ) {
         isLoading = true
         errorMessage = nil
 
@@ -35,12 +43,22 @@ final class CareTasksViewModel: ObservableObject {
         }
 
         do {
-            tasks = try manageCareTasksUseCase.getTasks(
-                for: petStayID
-            )
+            tasks =
+                try manageCareTasksUseCase
+                    .getTasks(
+                        for: petStayID
+                    )
+
+            WidgetDataService.shared
+                .updateWidget(
+                    with: tasks
+                )
+
         } catch {
             tasks = []
-            errorMessage = "Unable to load care tasks."
+
+            errorMessage =
+                "Unable to load care tasks."
         }
     }
 
@@ -53,16 +71,21 @@ final class CareTasksViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            try manageCareTasksUseCase.createTask(
-                petStayID: petStayID,
-                type: type,
-                scheduledTime: scheduledTime,
-                instructions: instructions
+            try manageCareTasksUseCase
+                .createTask(
+                    petStayID: petStayID,
+                    type: type,
+                    scheduledTime: scheduledTime,
+                    instructions: instructions
+                )
+
+            loadTasks(
+                for: petStayID
             )
 
-            loadTasks(for: petStayID)
         } catch {
-            errorMessage = "Unable to create care task."
+            errorMessage =
+                "Unable to create this care task. Please check the task details and try again."
         }
     }
 
@@ -74,29 +97,41 @@ final class CareTasksViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            try completeCareTaskUseCase.execute(
-                careTaskID: task.id,
-                completedBy: staff,
-                notes: notes
+            try completeCareTaskUseCase
+                .execute(
+                    careTaskID: task.id,
+                    completedBy: staff,
+                    notes: notes
+                )
+
+            loadTasks(
+                for: task.petStayID
             )
 
-            loadTasks(for: task.petStayID)
         } catch {
-            errorMessage = "Unable to complete care task."
+            errorMessage =
+                "Unable to complete this care task. Please try again."
         }
     }
 
-    func deleteTask(_ task: CareTask) {
+    func deleteTask(
+        _ task: CareTask
+    ) {
         errorMessage = nil
 
         do {
-            try manageCareTasksUseCase.deleteTask(
-                id: task.id
+            try manageCareTasksUseCase
+                .deleteTask(
+                    id: task.id
+                )
+
+            loadTasks(
+                for: task.petStayID
             )
 
-            loadTasks(for: task.petStayID)
         } catch {
-            errorMessage = "Unable to delete care task."
+            errorMessage =
+                "Unable to delete this care task. Please try again."
         }
     }
 }

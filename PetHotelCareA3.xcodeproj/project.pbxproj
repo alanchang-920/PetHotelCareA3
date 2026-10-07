@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C62ACE433076410F002E4E2C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C62ACE423076410F002E4E2C /* WidgetKit.framework */; };
+		C62ACE453076410F002E4E2C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C62ACE443076410F002E4E2C /* SwiftUI.framework */; };
+		C62ACE5030764111002E4E2C /* PetHotelCareWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C62ACE403076410F002E4E2C /* PetHotelCareWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C62ACC82306F8D47002E4E2C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,30 +27,52 @@
 			remoteGlobalIDString = C62ACC73306F8D46002E4E2C;
 			remoteInfo = PetHotelCareA3;
 		};
+		C62ACE4E30764111002E4E2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C62ACC6C306F8D46002E4E2C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C62ACE3F3076410F002E4E2C;
+			remoteInfo = PetHotelCareWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C62ACE5130764111002E4E2C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C62ACE5030764111002E4E2C /* PetHotelCareWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C62ACC74306F8D46002E4E2C /* PetHotelCareA3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetHotelCareA3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C62ACC81306F8D47002E4E2C /* PetHotelCareA3Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PetHotelCareA3Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C62ACC8B306F8D47002E4E2C /* PetHotelCareA3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PetHotelCareA3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C62ACE403076410F002E4E2C /* PetHotelCareWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PetHotelCareWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C62ACE423076410F002E4E2C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		C62ACE443076410F002E4E2C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		C62ACE5730764190002E4E2C /* PetHotelCareWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PetHotelCareWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		C62ACCCF3070E704002E4E2C /* Exceptions for "PetHotelCareA3" folder in "PetHotelCareA3" target */ = {
+		C62ACE5530764111002E4E2C /* Exceptions for "PetHotelCareWidget" folder in "PetHotelCareWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Data/CoreData/PetHotelCareModel.xcdatamodeld,
+				Info.plist,
 			);
-			target = C62ACC73306F8D46002E4E2C /* PetHotelCareA3 */;
+			target = C62ACE3F3076410F002E4E2C /* PetHotelCareWidgetExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C62ACC76306F8D46002E4E2C /* PetHotelCareA3 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				C62ACCCF3070E704002E4E2C /* Exceptions for "PetHotelCareA3" folder in "PetHotelCareA3" target */,
-			);
 			path = PetHotelCareA3;
 			sourceTree = "<group>";
 		};
@@ -56,6 +84,14 @@
 		C62ACC8E306F8D47002E4E2C /* PetHotelCareA3UITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = PetHotelCareA3UITests;
+			sourceTree = "<group>";
+		};
+		C62ACE463076410F002E4E2C /* PetHotelCareWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C62ACE5530764111002E4E2C /* Exceptions for "PetHotelCareWidget" folder in "PetHotelCareWidgetExtension" target */,
+			);
+			path = PetHotelCareWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -82,15 +118,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C62ACE3D3076410F002E4E2C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C62ACE453076410F002E4E2C /* SwiftUI.framework in Frameworks */,
+				C62ACE433076410F002E4E2C /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		C62ACC6B306F8D46002E4E2C = {
 			isa = PBXGroup;
 			children = (
+				C62ACE5730764190002E4E2C /* PetHotelCareWidgetExtension.entitlements */,
 				C62ACC76306F8D46002E4E2C /* PetHotelCareA3 */,
 				C62ACC84306F8D47002E4E2C /* PetHotelCareA3Tests */,
 				C62ACC8E306F8D47002E4E2C /* PetHotelCareA3UITests */,
+				C62ACE463076410F002E4E2C /* PetHotelCareWidget */,
+				C62ACE413076410F002E4E2C /* Frameworks */,
 				C62ACC75306F8D46002E4E2C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,8 +149,18 @@
 				C62ACC74306F8D46002E4E2C /* PetHotelCareA3.app */,
 				C62ACC81306F8D47002E4E2C /* PetHotelCareA3Tests.xctest */,
 				C62ACC8B306F8D47002E4E2C /* PetHotelCareA3UITests.xctest */,
+				C62ACE403076410F002E4E2C /* PetHotelCareWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C62ACE413076410F002E4E2C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C62ACE423076410F002E4E2C /* WidgetKit.framework */,
+				C62ACE443076410F002E4E2C /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -115,10 +173,12 @@
 				C62ACC70306F8D46002E4E2C /* Sources */,
 				C62ACC71306F8D46002E4E2C /* Frameworks */,
 				C62ACC72306F8D46002E4E2C /* Resources */,
+				C62ACE5130764111002E4E2C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C62ACE4F30764111002E4E2C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				C62ACC76306F8D46002E4E2C /* PetHotelCareA3 */,
@@ -176,6 +236,28 @@
 			productReference = C62ACC8B306F8D47002E4E2C /* PetHotelCareA3UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		C62ACE3F3076410F002E4E2C /* PetHotelCareWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C62ACE5430764111002E4E2C /* Build configuration list for PBXNativeTarget "PetHotelCareWidgetExtension" */;
+			buildPhases = (
+				C62ACE3C3076410F002E4E2C /* Sources */,
+				C62ACE3D3076410F002E4E2C /* Frameworks */,
+				C62ACE3E3076410F002E4E2C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C62ACE463076410F002E4E2C /* PetHotelCareWidget */,
+			);
+			name = PetHotelCareWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = PetHotelCareWidgetExtension;
+			productReference = C62ACE403076410F002E4E2C /* PetHotelCareWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -197,6 +279,9 @@
 						CreatedOnToolsVersion = 26.4.1;
 						TestTargetID = C62ACC73306F8D46002E4E2C;
 					};
+					C62ACE3F3076410F002E4E2C = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
 				};
 			};
 			buildConfigurationList = C62ACC6F306F8D46002E4E2C /* Build configuration list for PBXProject "PetHotelCareA3" */;
@@ -216,6 +301,7 @@
 				C62ACC73306F8D46002E4E2C /* PetHotelCareA3 */,
 				C62ACC80306F8D47002E4E2C /* PetHotelCareA3Tests */,
 				C62ACC8A306F8D47002E4E2C /* PetHotelCareA3UITests */,
+				C62ACE3F3076410F002E4E2C /* PetHotelCareWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -236,6 +322,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C62ACC89306F8D47002E4E2C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C62ACE3E3076410F002E4E2C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -266,6 +359,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C62ACE3C3076410F002E4E2C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -278,6 +378,11 @@
 			isa = PBXTargetDependency;
 			target = C62ACC73306F8D46002E4E2C /* PetHotelCareA3 */;
 			targetProxy = C62ACC8C306F8D47002E4E2C /* PBXContainerItemProxy */;
+		};
+		C62ACE4F30764111002E4E2C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C62ACE3F3076410F002E4E2C /* PetHotelCareWidgetExtension */;
+			targetProxy = C62ACE4E30764111002E4E2C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -406,8 +511,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PetHotelCareA3/PetHotelCareA3.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D2H5VNAS5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -437,8 +544,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PetHotelCareA3/PetHotelCareA3.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D2H5VNAS5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -469,6 +578,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D2H5VNAS5;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				MARKETING_VERSION = 1.0;
@@ -490,6 +600,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D2H5VNAS5;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				MARKETING_VERSION = 1.0;
@@ -510,6 +621,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D2H5VNAS5;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = student.uts.edu.au.PetHotelCareA3UITests;
@@ -529,6 +641,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D2H5VNAS5;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = student.uts.edu.au.PetHotelCareA3UITests;
@@ -540,6 +653,68 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PetHotelCareA3;
+			};
+			name = Release;
+		};
+		C62ACE5230764111002E4E2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = PetHotelCareWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D2H5VNAS5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PetHotelCareWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PetHotelCareWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = student.uts.edu.au.PetHotelCareA3.PetHotelCareWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C62ACE5330764111002E4E2C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = PetHotelCareWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D2H5VNAS5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PetHotelCareWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PetHotelCareWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = student.uts.edu.au.PetHotelCareA3.PetHotelCareWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -578,6 +753,15 @@
 			buildConfigurations = (
 				C62ACC9C306F8D47002E4E2C /* Debug */,
 				C62ACC9D306F8D47002E4E2C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C62ACE5430764111002E4E2C /* Build configuration list for PBXNativeTarget "PetHotelCareWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C62ACE5230764111002E4E2C /* Debug */,
+				C62ACE5330764111002E4E2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

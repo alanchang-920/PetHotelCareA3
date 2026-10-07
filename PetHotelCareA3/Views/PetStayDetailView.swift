@@ -37,6 +37,16 @@ struct PetStayDetailView: View {
         .onAppear {
             viewModel.loadPetStay(id: petStayID)
         }
+        .onChange(
+            of: viewModel.petStay?.id
+        ) { _, _ in
+            if let petStay = viewModel.petStay {
+                WidgetDataService.shared
+                    .updateNextPetName(
+                        petStay.pet.name
+                    )
+            }
+        }
     }
 }
 
