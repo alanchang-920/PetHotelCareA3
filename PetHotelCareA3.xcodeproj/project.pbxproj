@@ -10,6 +10,9 @@
 		C62ACE433076410F002E4E2C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C62ACE423076410F002E4E2C /* WidgetKit.framework */; };
 		C62ACE453076410F002E4E2C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C62ACE443076410F002E4E2C /* SwiftUI.framework */; };
 		C62ACE5030764111002E4E2C /* PetHotelCareWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C62ACE403076410F002E4E2C /* PetHotelCareWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C62ACE7430765AA3002E4E2C /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C62ACE7330765AA3002E4E2C /* UserNotifications.framework */; };
+		C62ACE7630765AA4002E4E2C /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C62ACE7530765AA4002E4E2C /* UserNotificationsUI.framework */; };
+		C62ACE8030765AA4002E4E2C /* PetHotelCareNotificationContent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C62ACE7230765AA3002E4E2C /* PetHotelCareNotificationContent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +37,20 @@
 			remoteGlobalIDString = C62ACE3F3076410F002E4E2C;
 			remoteInfo = PetHotelCareWidgetExtension;
 		};
+		C62ACE7E30765AA4002E4E2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C62ACC6C306F8D46002E4E2C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C62ACE7130765AA3002E4E2C;
+			remoteInfo = PetHotelCareNotificationContent;
+		};
+		C62ACE8530766111002E4E2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C62ACC6C306F8D46002E4E2C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C62ACE7130765AA3002E4E2C;
+			remoteInfo = PetHotelCareNotificationContent;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +61,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				C62ACE5030764111002E4E2C /* PetHotelCareWidgetExtension.appex in Embed Foundation Extensions */,
+				C62ACE8030765AA4002E4E2C /* PetHotelCareNotificationContent.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -58,6 +76,9 @@
 		C62ACE423076410F002E4E2C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		C62ACE443076410F002E4E2C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		C62ACE5730764190002E4E2C /* PetHotelCareWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PetHotelCareWidgetExtension.entitlements; sourceTree = "<group>"; };
+		C62ACE7230765AA3002E4E2C /* PetHotelCareNotificationContent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PetHotelCareNotificationContent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C62ACE7330765AA3002E4E2C /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		C62ACE7530765AA4002E4E2C /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -74,6 +95,13 @@
 				Info.plist,
 			);
 			target = C62ACC73306F8D46002E4E2C /* PetHotelCareA3 */;
+		};
+		C62ACE8430765AA4002E4E2C /* Exceptions for "PetHotelCareNotificationContent" folder in "PetHotelCareNotificationContent" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C62ACE7130765AA3002E4E2C /* PetHotelCareNotificationContent */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -102,6 +130,14 @@
 				C62ACE5530764111002E4E2C /* Exceptions for "PetHotelCareWidget" folder in "PetHotelCareWidgetExtension" target */,
 			);
 			path = PetHotelCareWidget;
+			sourceTree = "<group>";
+		};
+		C62ACE7730765AA4002E4E2C /* PetHotelCareNotificationContent */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C62ACE8430765AA4002E4E2C /* Exceptions for "PetHotelCareNotificationContent" folder in "PetHotelCareNotificationContent" target */,
+			);
+			path = PetHotelCareNotificationContent;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -137,6 +173,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C62ACE6F30765AA3002E4E2C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C62ACE7630765AA4002E4E2C /* UserNotificationsUI.framework in Frameworks */,
+				C62ACE7430765AA3002E4E2C /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -148,6 +193,7 @@
 				C62ACC84306F8D47002E4E2C /* PetHotelCareA3Tests */,
 				C62ACC8E306F8D47002E4E2C /* PetHotelCareA3UITests */,
 				C62ACE463076410F002E4E2C /* PetHotelCareWidget */,
+				C62ACE7730765AA4002E4E2C /* PetHotelCareNotificationContent */,
 				C62ACE413076410F002E4E2C /* Frameworks */,
 				C62ACC75306F8D46002E4E2C /* Products */,
 			);
@@ -160,6 +206,7 @@
 				C62ACC81306F8D47002E4E2C /* PetHotelCareA3Tests.xctest */,
 				C62ACC8B306F8D47002E4E2C /* PetHotelCareA3UITests.xctest */,
 				C62ACE403076410F002E4E2C /* PetHotelCareWidgetExtension.appex */,
+				C62ACE7230765AA3002E4E2C /* PetHotelCareNotificationContent.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,6 +216,8 @@
 			children = (
 				C62ACE423076410F002E4E2C /* WidgetKit.framework */,
 				C62ACE443076410F002E4E2C /* SwiftUI.framework */,
+				C62ACE7330765AA3002E4E2C /* UserNotifications.framework */,
+				C62ACE7530765AA4002E4E2C /* UserNotificationsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -189,6 +238,8 @@
 			);
 			dependencies = (
 				C62ACE4F30764111002E4E2C /* PBXTargetDependency */,
+				C62ACE7F30765AA4002E4E2C /* PBXTargetDependency */,
+				C62ACE8630766111002E4E2C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				C62ACC76306F8D46002E4E2C /* PetHotelCareA3 */,
@@ -268,6 +319,28 @@
 			productReference = C62ACE403076410F002E4E2C /* PetHotelCareWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		C62ACE7130765AA3002E4E2C /* PetHotelCareNotificationContent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C62ACE8130765AA4002E4E2C /* Build configuration list for PBXNativeTarget "PetHotelCareNotificationContent" */;
+			buildPhases = (
+				C62ACE6E30765AA3002E4E2C /* Sources */,
+				C62ACE6F30765AA3002E4E2C /* Frameworks */,
+				C62ACE7030765AA3002E4E2C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C62ACE7730765AA4002E4E2C /* PetHotelCareNotificationContent */,
+			);
+			name = PetHotelCareNotificationContent;
+			packageProductDependencies = (
+			);
+			productName = PetHotelCareNotificationContent;
+			productReference = C62ACE7230765AA3002E4E2C /* PetHotelCareNotificationContent.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -292,6 +365,9 @@
 					C62ACE3F3076410F002E4E2C = {
 						CreatedOnToolsVersion = 26.4.1;
 					};
+					C62ACE7130765AA3002E4E2C = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
 				};
 			};
 			buildConfigurationList = C62ACC6F306F8D46002E4E2C /* Build configuration list for PBXProject "PetHotelCareA3" */;
@@ -312,6 +388,7 @@
 				C62ACC80306F8D47002E4E2C /* PetHotelCareA3Tests */,
 				C62ACC8A306F8D47002E4E2C /* PetHotelCareA3UITests */,
 				C62ACE3F3076410F002E4E2C /* PetHotelCareWidgetExtension */,
+				C62ACE7130765AA3002E4E2C /* PetHotelCareNotificationContent */,
 			);
 		};
 /* End PBXProject section */
@@ -339,6 +416,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C62ACE3E3076410F002E4E2C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C62ACE7030765AA3002E4E2C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -376,6 +460,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C62ACE6E30765AA3002E4E2C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -393,6 +484,16 @@
 			isa = PBXTargetDependency;
 			target = C62ACE3F3076410F002E4E2C /* PetHotelCareWidgetExtension */;
 			targetProxy = C62ACE4E30764111002E4E2C /* PBXContainerItemProxy */;
+		};
+		C62ACE7F30765AA4002E4E2C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C62ACE7130765AA3002E4E2C /* PetHotelCareNotificationContent */;
+			targetProxy = C62ACE7E30765AA4002E4E2C /* PBXContainerItemProxy */;
+		};
+		C62ACE8630766111002E4E2C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C62ACE7130765AA3002E4E2C /* PetHotelCareNotificationContent */;
+			targetProxy = C62ACE8530766111002E4E2C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -730,6 +831,62 @@
 			};
 			name = Release;
 		};
+		C62ACE8230765AA4002E4E2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D2H5VNAS5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PetHotelCareNotificationContent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PetHotelCareNotificationContent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = student.uts.edu.au.PetHotelCareA3.PetHotelCareNotificationContent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C62ACE8330765AA4002E4E2C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D2H5VNAS5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PetHotelCareNotificationContent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PetHotelCareNotificationContent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = student.uts.edu.au.PetHotelCareA3.PetHotelCareNotificationContent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -774,6 +931,15 @@
 			buildConfigurations = (
 				C62ACE5230764111002E4E2C /* Debug */,
 				C62ACE5330764111002E4E2C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C62ACE8130765AA4002E4E2C /* Build configuration list for PBXNativeTarget "PetHotelCareNotificationContent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C62ACE8230765AA4002E4E2C /* Debug */,
+				C62ACE8330765AA4002E4E2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

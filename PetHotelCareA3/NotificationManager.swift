@@ -9,17 +9,27 @@ import Foundation
 import UserNotifications
 
 final class NotificationManager {
+
     static let shared = NotificationManager()
+
+    static let careTaskCategory =
+        "CARE_TASK"
 
     private init() {}
 
     func requestAuthorization() {
+
+        registerCategories()
+
         UNUserNotificationCenter.current()
             .requestAuthorization(
                 options: [.alert, .sound, .badge]
             ) { granted, error in
+
                 if let error {
-                    print("Notification permission error: \(error)")
+                    print(
+                        "Notification permission error: \(error)"
+                    )
                     return
                 }
 
@@ -37,35 +47,79 @@ final class NotificationManager {
         taskType: String,
         scheduledTime: Date
     ) {
+
         guard scheduledTime > Date() else {
             return
         }
 
-        let content = UNMutableNotificationContent()
+        let content =
+            UNMutableNotificationContent()
+
         content.title = "Pet Hotel Care"
-        content.body = "\(petName) has a \(taskType) task scheduled now."
+
+        content.body =
+            "\(petName) has a \(taskType) task scheduled now."
+
         content.sound = .default
 
-        let dateComponents = Calendar.current.dateComponents(
-            [.year, .month, .day, .hour, .minute],
-            from: scheduledTime
-        )
+        content.categoryIdentifier =
+            Self.careTaskCategory
 
-        let trigger = UNCalendarNotificationTrigger(
-            dateMatching: dateComponents,
-            repeats: false
-        )
+        content.userInfo = [
+            "petName": petName,
+            "taskType": taskType
+        ]
 
-        let request = UNNotificationRequest(
-            identifier: taskID.uuidString,
-            content: content,
-            trigger: trigger
-        )
+        let dateComponents =
+            Calendar.current.dateComponents(
+                [
+                    .year,
+                    .month,
+                    .day,
+                    .hour,
+                    .minute
+                ],
+                from: scheduledTime
+            )
 
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error {
-                print("Unable to schedule notification: \(error)")
+        let trigger =
+            UNCalendarNotificationTrigger(
+                dateMatching: dateComponents,
+                repeats: false
+            )
+
+        let request =
+            UNNotificationRequest(
+                identifier: taskID.uuidString,
+                content: content,
+                trigger: trigger
+            )
+
+        UNUserNotificationCenter.current()
+            .add(request) { error in
+
+                if let error {
+                    print(
+                        "Unable to schedule notification: \(error)"
+                    )
+                }
             }
-        }
+    }
+
+    private func registerCategories() {
+
+        let careTaskCategory =
+            UNNotificationCategory(
+                identifier:
+                    Self.careTaskCategory,
+                actions: [],
+                intentIdentifiers: [],
+                options: []
+            )
+
+        UNUserNotificationCenter.current()
+            .setNotificationCategories([
+                careTaskCategory
+            ])
     }
 }
