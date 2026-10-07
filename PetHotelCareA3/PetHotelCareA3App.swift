@@ -11,16 +11,22 @@ import CoreData
 @main
 struct PetHotelCareA3App: App {
 
+    @UIApplicationDelegateAdaptor(AppDelegate.self)
+    private var appDelegate
+
     private let persistenceController: PersistenceController
     private let appContainer: AppContainer
 
     init() {
-        let persistenceController = PersistenceController.shared
+        let persistenceController =
+            PersistenceController.shared
 
-        self.persistenceController = persistenceController
+        self.persistenceController =
+            persistenceController
 
         self.appContainer = AppContainer(
-            persistenceController: persistenceController
+            persistenceController:
+                persistenceController
         )
     }
 
@@ -34,8 +40,11 @@ struct PetHotelCareA3App: App {
                 persistenceController.container.viewContext
             )
             .onAppear {
-                           NotificationManager.shared.requestAuthorization()
-                       }
+                NotificationManager.shared
+                    .requestAuthorization()
+                
+                QuickActionManager.configure()
+            }
         }
     }
 }

@@ -68,11 +68,21 @@
 			);
 			target = C62ACE3F3076410F002E4E2C /* PetHotelCareWidgetExtension */;
 		};
+		C62ACE6530764B48002E4E2C /* Exceptions for "PetHotelCareA3" folder in "PetHotelCareA3" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C62ACC73306F8D46002E4E2C /* PetHotelCareA3 */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C62ACC76306F8D46002E4E2C /* PetHotelCareA3 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C62ACE6530764B48002E4E2C /* Exceptions for "PetHotelCareA3" folder in "PetHotelCareA3" target */,
+			);
 			path = PetHotelCareA3;
 			sourceTree = "<group>";
 		};
@@ -517,6 +527,7 @@
 				DEVELOPMENT_TEAM = 6D2H5VNAS5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PetHotelCareA3/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -550,6 +561,7 @@
 				DEVELOPMENT_TEAM = 6D2H5VNAS5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PetHotelCareA3/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -11,13 +11,21 @@ struct ContentView: View {
 
     let appContainer: AppContainer
 
+    @State private var selectedTab = 0
+
+    @ObservedObject private var quickActionManager =
+        QuickActionManager.shared
+
     var body: some View {
-        TabView {
+
+        TabView(selection: $selectedTab) {
 
             NavigationStack {
+
                 TodayCareDashboardView(
                     viewModel:
-                        appContainer.makeTodayCareDashboardViewModel()
+                        appContainer
+                            .makeTodayCareDashboardViewModel()
                 )
             }
             .tabItem {
@@ -26,11 +34,14 @@ struct ContentView: View {
                     systemImage: "checklist"
                 )
             }
+            .tag(0)
 
             NavigationStack {
+
                 CurrentPetStaysView(
                     viewModel:
-                        appContainer.makeCurrentPetStaysViewModel(),
+                        appContainer
+                            .makeCurrentPetStaysViewModel(),
                     appContainer: appContainer
                 )
             }
@@ -40,11 +51,49 @@ struct ContentView: View {
                     systemImage: "house"
                 )
             }
+            .tag(1)
+        }
+        .onOpenURL { url in
+            handleDeepLink(url)
+        }
+        .onChange(
+            of: quickActionManager.selectedTab
+        ) { _, newValue in
+
+            guard let newValue else {
+                return
+            }
+
+            selectedTab = newValue
+
+            quickActionManager.selectedTab = nil
+        }
+    }
+
+    private func handleDeepLink(
+        _ url: URL
+    ) {
+
+        guard url.scheme == "pethotelcare" else {
+            return
+        }
+
+        switch url.host {
+
+        case "today":
+            selectedTab = 0
+
+        case "stays":
+            selectedTab = 1
+
+        default:
+            break
         }
     }
 }
 
 #Preview {
+
     let persistenceController =
         PersistenceController(
             inMemory: true
