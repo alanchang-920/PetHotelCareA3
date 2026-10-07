@@ -11,16 +11,28 @@ import CoreData
 @main
 struct PetHotelCareA3App: App {
 
-    // Shared Core Data persistence controller.
-    private let persistenceController = PersistenceController.shared
+    private let persistenceController: PersistenceController
+    private let appContainer: AppContainer
+
+    init() {
+        let persistenceController = PersistenceController.shared
+
+        self.persistenceController = persistenceController
+
+        self.appContainer = AppContainer(
+            persistenceController: persistenceController
+        )
+    }
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(
-                    \.managedObjectContext,
-                    persistenceController.container.viewContext
-                )
+            ContentView(
+                appContainer: appContainer
+            )
+            .environment(
+                \.managedObjectContext,
+                persistenceController.container.viewContext
+            )
         }
     }
 }

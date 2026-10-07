@@ -8,17 +8,55 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    let appContainer: AppContainer
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+
+            NavigationStack {
+                TodayCareDashboardView(
+                    viewModel:
+                        appContainer.makeTodayCareDashboardViewModel()
+                )
+            }
+            .tabItem {
+                Label(
+                    "Today's Care",
+                    systemImage: "checklist"
+                )
+            }
+
+            NavigationStack {
+                CurrentPetStaysView(
+                    viewModel:
+                        appContainer.makeCurrentPetStaysViewModel(),
+                    appContainer: appContainer
+                )
+            }
+            .tabItem {
+                Label(
+                    "Current Stays",
+                    systemImage: "house"
+                )
+            }
         }
-        .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    let persistenceController =
+        PersistenceController(
+            inMemory: true
+        )
+
+    let appContainer =
+        AppContainer(
+            persistenceController:
+                persistenceController
+        )
+
+    ContentView(
+        appContainer: appContainer
+    )
 }

@@ -10,20 +10,33 @@ import SwiftUI
 struct CurrentPetStaysView: View {
 
     @ObservedObject var viewModel: CurrentPetStaysViewModel
+    let appContainer: AppContainer
 
     var body: some View {
         ScrollView {
-
             VStack(alignment: .leading, spacing: 20) {
-
                 summarySection
-
                 staysSection
             }
             .padding()
         }
         .navigationTitle("Current Stays")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(
+                placement: .topBarTrailing
+            ) {
+                NavigationLink {
+                    SelectPetView(
+                        viewModel:
+                            appContainer.makePetSelectionViewModel(),
+                        appContainer: appContainer
+                    )
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
         .onAppear {
             viewModel.loadCurrentPetStays()
         }
@@ -33,11 +46,8 @@ struct CurrentPetStaysView: View {
 private extension CurrentPetStaysView {
 
     var summarySection: some View {
-
         HStack {
-
             VStack(alignment: .leading, spacing: 4) {
-
                 Text("Current Pet Stays")
                     .font(.title2)
                     .fontWeight(.bold)
@@ -50,7 +60,6 @@ private extension CurrentPetStaysView {
             Spacer()
 
             VStack(spacing: 2) {
-
                 Text("\(viewModel.petStays.count)")
                     .font(.title2)
                     .fontWeight(.bold)
@@ -75,29 +84,30 @@ private extension CurrentPetStaysView {
 
     @ViewBuilder
     var staysSection: some View {
-
         if viewModel.isLoading {
-
             ProgressView()
                 .frame(
                     maxWidth: .infinity,
                     minHeight: 200
                 )
-
         } else if let errorMessage = viewModel.errorMessage {
-
             errorView(message: errorMessage)
-
         } else if viewModel.petStays.isEmpty {
-
             emptyState
-
         } else {
-
             LazyVStack(spacing: 14) {
-
                 ForEach(viewModel.petStays) { stay in
-                    stayCard(stay)
+                    NavigationLink {
+                        PetStayDetailView(
+                            viewModel:
+                                appContainer.makePetStayDetailViewModel(),
+                            petStayID: stay.id,
+                            appContainer: appContainer
+                        )
+                    } label: {
+                        stayCard(stay)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
         }
@@ -109,12 +119,9 @@ private extension CurrentPetStaysView {
     func stayCard(
         _ stay: PetStay
     ) -> some View {
-
         VStack(alignment: .leading, spacing: 14) {
 
-            // Room + Species
             HStack {
-
                 Label(
                     "Room \(stay.roomNumber)",
                     systemImage: "door.left.hand.closed"
@@ -135,10 +142,7 @@ private extension CurrentPetStaysView {
                     .clipShape(Capsule())
             }
 
-
-            // Pet Information
             HStack(spacing: 12) {
-
                 Image(systemName: petIcon(for: stay.pet))
                     .font(.title2)
                     .frame(width: 44, height: 44)
@@ -148,7 +152,6 @@ private extension CurrentPetStaysView {
                     .clipShape(Circle())
 
                 VStack(alignment: .leading, spacing: 3) {
-
                     Text(stay.pet.name)
                         .font(.headline)
 
@@ -158,17 +161,17 @@ private extension CurrentPetStaysView {
                 }
 
                 Spacer()
-            }
 
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.secondary)
+            }
 
             Divider()
 
-
-            // Stay Dates
             HStack {
-
                 VStack(alignment: .leading, spacing: 3) {
-
                     Text("CHECK IN")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
@@ -192,7 +195,6 @@ private extension CurrentPetStaysView {
                 Spacer()
 
                 VStack(alignment: .trailing, spacing: 3) {
-
                     Text("CHECK OUT")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
@@ -221,9 +223,7 @@ private extension CurrentPetStaysView {
 private extension CurrentPetStaysView {
 
     var emptyState: some View {
-
         VStack(spacing: 12) {
-
             Image(systemName: "house")
                 .font(.largeTitle)
 
@@ -241,13 +241,10 @@ private extension CurrentPetStaysView {
         )
     }
 
-
     func errorView(
         message: String
     ) -> some View {
-
         VStack(spacing: 10) {
-
             Image(systemName: "exclamationmark.triangle")
                 .font(.title)
 
@@ -267,27 +264,20 @@ private extension CurrentPetStaysView {
     func petIcon(
         for pet: Pet
     ) -> String {
-
         switch pet.species {
-
         case .dog:
             return "dog"
-
         case .cat:
             return "cat"
         }
     }
 
-
     func speciesTitle(
         for pet: Pet
     ) -> String {
-
         switch pet.species {
-
         case .dog:
             return "DOG"
-
         case .cat:
             return "CAT"
         }
@@ -313,24 +303,21 @@ private final class PreviewPetStayRepository: PetStayRepository {
     }
 }
 
-
 #Preview("Current Pet Stays") {
 
-    let repository = PreviewPetStayRepository()
-
-    let useCase = GetCurrentPetStaysUseCase(
-        petStayRepository: repository
+    let persistenceController = PersistenceController(
+        inMemory: true
     )
 
-    let viewModel = CurrentPetStaysViewModel(
-        getCurrentPetStaysUseCase: useCase
+    let appContainer = AppContainer(
+        persistenceController: persistenceController
     )
 
-    return NavigationStack {
-        CurrentPetStaysView(
-            viewModel: viewModel
-        )
-    }
+    CurrentPetStaysView(
+        viewModel:
+            appContainer.makeCurrentPetStaysViewModel(),
+        appContainer: appContainer
+    )
 }
 
 #endif

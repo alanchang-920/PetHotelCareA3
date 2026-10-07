@@ -12,29 +12,21 @@ struct PetStayDetailView: View {
     @ObservedObject var viewModel: PetStayDetailViewModel
 
     let petStayID: UUID
+    let appContainer: AppContainer
 
     var body: some View {
         ScrollView {
-
             VStack(
                 alignment: .leading,
                 spacing: 20
             ) {
-
                 if viewModel.isLoading {
-
                     loadingView
-
                 } else if let errorMessage = viewModel.errorMessage {
-
                     errorView(message: errorMessage)
-
                 } else if let stay = viewModel.petStay {
-
                     stayContent(stay)
-
                 } else {
-
                     emptyView
                 }
             }
@@ -54,15 +46,10 @@ private extension PetStayDetailView {
     func stayContent(
         _ stay: PetStay
     ) -> some View {
-
         petSection(stay)
-
         staySection(stay)
-
         feedingSection(stay)
-
         careNotesSection(stay)
-
         actionsSection(stay)
     }
 }
@@ -72,17 +59,14 @@ private extension PetStayDetailView {
     func petSection(
         _ stay: PetStay
     ) -> some View {
-
         VStack(
             alignment: .leading,
             spacing: 12
         ) {
-
             Text("Pet")
                 .font(.headline)
 
             HStack(spacing: 14) {
-
                 Image(systemName: "pawprint.fill")
                     .font(.title2)
                     .frame(
@@ -100,7 +84,6 @@ private extension PetStayDetailView {
                     alignment: .leading,
                     spacing: 4
                 ) {
-
                     Text(stay.pet.name)
                         .font(.title3)
                         .fontWeight(.semibold)
@@ -123,17 +106,14 @@ private extension PetStayDetailView {
     func staySection(
         _ stay: PetStay
     ) -> some View {
-
         VStack(
             alignment: .leading,
             spacing: 12
         ) {
-
             Text("Stay")
                 .font(.headline)
 
             VStack(spacing: 0) {
-
                 detailRow(
                     title: "Room",
                     value: stay.roomNumber
@@ -173,9 +153,7 @@ private extension PetStayDetailView {
         title: String,
         value: String
     ) -> some View {
-
         HStack {
-
             Text(title)
                 .foregroundStyle(.secondary)
 
@@ -193,12 +171,10 @@ private extension PetStayDetailView {
     func feedingSection(
         _ stay: PetStay
     ) -> some View {
-
         VStack(
             alignment: .leading,
             spacing: 10
         ) {
-
             Label(
                 "Feeding Instructions",
                 systemImage: "fork.knife"
@@ -232,12 +208,10 @@ private extension PetStayDetailView {
     func careNotesSection(
         _ stay: PetStay
     ) -> some View {
-
         VStack(
             alignment: .leading,
             spacing: 10
         ) {
-
             Label(
                 "Care Notes",
                 systemImage: "note.text"
@@ -271,44 +245,54 @@ private extension PetStayDetailView {
     func actionsSection(
         _ stay: PetStay
     ) -> some View {
-
         VStack(
             alignment: .leading,
             spacing: 12
         ) {
-
             Text("Care")
                 .font(.headline)
 
-            Button {
-                // Navigation will be connected later.
+            NavigationLink {
+                CareTasksView(
+                    viewModel:
+                        appContainer.makeCareTasksViewModel(),
+                    petStayID: stay.id
+                )
             } label: {
-
                 actionRow(
                     title: "Daily Care Tasks",
                     systemImage: "checklist"
                 )
             }
+            .buttonStyle(.plain)
 
-            Button {
-                // Navigation will be connected later.
+            NavigationLink {
+                MedicationScheduleView(
+                    petStayID: stay.id,
+                    viewModel:
+                        appContainer.makeMedicationScheduleViewModel()
+                )
             } label: {
-
                 actionRow(
                     title: "Medication Schedule",
                     systemImage: "pills"
                 )
             }
+            .buttonStyle(.plain)
 
-            Button {
-                // Navigation will be connected later.
+            NavigationLink {
+                CareHistoryView(
+                    petStayID: stay.id,
+                    viewModel:
+                        appContainer.makeCareHistoryViewModel()
+                )
             } label: {
-
                 actionRow(
                     title: "Care History",
                     systemImage: "clock.arrow.circlepath"
                 )
             }
+            .buttonStyle(.plain)
         }
     }
 
@@ -316,9 +300,7 @@ private extension PetStayDetailView {
         title: String,
         systemImage: String
     ) -> some View {
-
         HStack {
-
             Image(systemName: systemImage)
                 .frame(width: 28)
 
@@ -344,9 +326,7 @@ private extension PetStayDetailView {
 private extension PetStayDetailView {
 
     var loadingView: some View {
-
         VStack(spacing: 12) {
-
             ProgressView()
 
             Text("Loading stay...")
@@ -358,16 +338,11 @@ private extension PetStayDetailView {
             minHeight: 250
         )
     }
-}
-
-private extension PetStayDetailView {
 
     func errorView(
         message: String
     ) -> some View {
-
         VStack(spacing: 12) {
-
             Image(
                 systemName: "exclamationmark.triangle"
             )
@@ -382,16 +357,10 @@ private extension PetStayDetailView {
             minHeight: 250
         )
     }
-}
-
-private extension PetStayDetailView {
 
     var emptyView: some View {
-
         VStack(spacing: 12) {
-
             Image(systemName: "house")
-
                 .font(.title)
 
             Text("Stay Not Found")
@@ -411,7 +380,46 @@ private extension PetStayDetailView {
     }
 }
 
+#if DEBUG
+
+private final class PreviewPetStayDetailRepository: PetStayRepository {
+
+    private var petStays: [PetStay]
+
+    init(
+        petStays: [PetStay]
+    ) {
+        self.petStays = petStays
+    }
+
+    func fetchPetStays() throws -> [PetStay] {
+        petStays
+    }
+
+    func savePetStay(
+        _ petStay: PetStay
+    ) throws {
+        petStays.append(petStay)
+    }
+
+    func deletePetStay(
+        id: UUID
+    ) throws {
+        petStays.removeAll {
+            $0.id == id
+        }
+    }
+}
+
 #Preview("Pet Stay Detail") {
+
+    let persistenceController = PersistenceController(
+        inMemory: true
+    )
+
+    let appContainer = AppContainer(
+        persistenceController: persistenceController
+    )
 
     let owner = PetOwner(
         name: "Alan Chang",
@@ -458,30 +466,10 @@ private extension PetStayDetailView {
     NavigationStack {
         PetStayDetailView(
             viewModel: viewModel,
-            petStayID: petStay.id
+            petStayID: petStay.id,
+            appContainer: appContainer
         )
     }
 }
 
-private final class PreviewPetStayDetailRepository: PetStayRepository {
-
-    private var petStays: [PetStay]
-
-    init(petStays: [PetStay]) {
-        self.petStays = petStays
-    }
-
-    func fetchPetStays() throws -> [PetStay] {
-        petStays
-    }
-
-    func savePetStay(_ petStay: PetStay) throws {
-        petStays.append(petStay)
-    }
-
-    func deletePetStay(id: UUID) throws {
-        petStays.removeAll {
-            $0.id == id
-        }
-    }
-}
+#endif
