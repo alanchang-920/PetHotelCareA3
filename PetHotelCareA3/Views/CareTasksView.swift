@@ -28,6 +28,20 @@ struct CareTasksView: View {
         }
         .navigationTitle("Daily Care Tasks")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(
+                placement: .topBarTrailing
+            ) {
+                NavigationLink {
+                    AddCareTaskView(
+                        viewModel: viewModel,
+                        petStayID: petStayID
+                    )
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
         .onAppear {
             viewModel.loadTasks(
                 for: petStayID
@@ -205,6 +219,21 @@ private extension CareTasksView {
                     ? .secondary
                     : .primary
                 )
+                
+                if !task.isCompleted {
+                    Button {
+                        completeTask(task)
+                    } label: {
+                        Label(
+                            "Mark as Completed",
+                            systemImage: "checkmark.circle"
+                        )
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .padding(.top, 4)
+                }
             }
         }
         .padding()
@@ -503,5 +532,22 @@ private final class PreviewCareActivityRecordRepository:
         records.removeAll {
             $0.id == id
         }
+    }
+}
+
+private extension CareTasksView {
+
+    func completeTask(
+        _ task: CareTask
+    ) {
+        let staff = StaffMember(
+            name: "Staff"
+        )
+
+        viewModel.completeTask(
+            task,
+            completedBy: staff,
+            notes: ""
+        )
     }
 }
